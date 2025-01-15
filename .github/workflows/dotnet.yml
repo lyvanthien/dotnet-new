@@ -1,40 +1,53 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: Dockerize .NET web aoolication
+# name: Dockerize .NET web aplication
 
-on: push
+name: Build and Publish image to Docker Hub
+
+on:
+  [workflow_dispatch]
+# on: push
 
 jobs:
-  building-container:
-    name: Build Docker container image
+  publish_images:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
-    - name: Publish to GitHub Packages
-      uses: docker/build-push-action@v2
-      with:
-        username: ${{ github.actor}}  
-        password: ${{ secrets.GITHUB_TOKEN}}
-        registry: docker.pkg.github.com
-        repository: ${{ github.repository}}/next
-        tags: latest, ${{ github.run_number}}
-    - name: Publish to Docker Hub 
-      uses: docker/build-push-action@v2
-      with:
-        username: ${{ secrets.DOCKER-USERNAME }}
-        password: ${{ secrets.DOCKER-PASSWORD }}
-        repository: lyvanthien/next
-        tags: latest, ${{ github.run_number }}
+        - name: checkout
+          uses: actions/checkout@v4
+        - name: build image
+          run: docker build ./ -t lyvanthien/exampleci-cd-workflow:latest
+        - name: push image to docker hub
+          run: docker push lyvanthien/exampleci-cd-workflow:latest
+  # building-container:
+  #   name: Build Docker container image
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v4
+  #   - name: Setup .NET
+  #     uses: actions/setup-dotnet@v4
+  #     with:
+  #       dotnet-version: 8.0.x
+  #   - name: Restore dependencies
+  #     run: dotnet restore
+  #   - name: Build
+  #     run: dotnet build --no-restore
+  #   - name: Test
+  #     run: dotnet test --no-build --verbosity normal
+  #   - name: Publish to GitHub Packages
+  #     uses: docker/build-push-action@v2
+  #     with:
+  #       username: ${{ github.actor}}  
+  #       password: ${{ secrets.GITHUB_TOKEN}}
+  #       registry: docker.pkg.github.com
+  #       repository: ${{ github.repository}}/next
+  #       tags: latest, ${{ github.run_number}}
+  #   - name: Publish to Docker Hub 
+  #     uses: docker/build-push-action@v2
+  #     with:
+  #       username: ${{ secrets.DOCKER-USERNAME }}
+  #       password: ${{ secrets.DOCKER-PASSWORD }}
+  #       repository: lyvanthien/next
+  #       tags: latest, ${{ github.run_number }}
