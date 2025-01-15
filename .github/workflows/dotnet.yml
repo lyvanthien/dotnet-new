@@ -20,9 +20,9 @@ jobs:
         - name: Login to Docker Hub
           uses: docker/login-action@v3
           with:
-            username: ${{ secrets.DOCKER-USERNAME }}
+            username: ${{ vars.DOCKER-USERNAME }}
             password: ${{ secrets.DOCKER_HUB_TOKEN }}
-            
+
         - name: push image to docker hub
           run: 
             # docker login -u lyvanthien -p ${{ secrets.DOCKER_HUB_TOKEN }} lyvanthien/exampleci-cd-workflow:latest
