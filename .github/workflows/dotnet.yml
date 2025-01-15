@@ -25,7 +25,7 @@ jobs:
 
         - name: push image to docker hub
           run: 
-            docker login -u lythienhoang@gmail.com -p ${{ secrets.DOCKER_HUB_TOKEN }} 
+            docker login -u lyvanthien -p ${{ secrets.DOCKER_HUB_TOKEN }} 
             docker push lyvanthien/exampleci-cd-workflow:latest
   # building-container:
   #   name: Build Docker container image
