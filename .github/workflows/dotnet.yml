@@ -1,21 +1,18 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
+name: Dockerize .NET web aoolication
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: push
 
 jobs:
-  building:
-
+  building-container:
+    name: Build Docker container image
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -26,3 +23,10 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Publish to Docker Hub 
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER-USERNAME }}
+        password: ${{ secrets.DOCKER-PASSWORD }}
+        repository: lyvanthien/dotnet-new
+        tags: latest, ${{ github.run_number }}
