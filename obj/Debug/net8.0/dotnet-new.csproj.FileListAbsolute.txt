@@ -28,3 +28,4 @@ D:\DockerLearn\dotnet-new\obj\Debug\net8.0\refint\dotnet-new.dll
 D:\DockerLearn\dotnet-new\obj\Debug\net8.0\dotnet-new.pdb
 D:\DockerLearn\dotnet-new\obj\Debug\net8.0\dotnet-new.genruntimeconfig.cache
 D:\DockerLearn\dotnet-new\obj\Debug\net8.0\ref\dotnet-new.dll
+D:\DockerLearn\dotnet-new\obj\Debug\net8.0\dotnet-new.sourcelink.json
